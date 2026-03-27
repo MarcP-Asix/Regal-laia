@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regaleet</title>
+    <style>
+        :root {
+            --fondo-cielo: #87CEEB;
+            --jarron-cristal: rgba(255, 255, 255, 0.4);
+            --agua: rgba(100, 210, 255, 0.6);
+            --tulipan: #ff4d6d;
+            --lirio: #e0aaff;
+            --margarita: #ffffff;
+            --centro-margarita: #ffd60a;
+            --tallo: #388e3c;
+        }
+
+        body {
+            background-color: var(--fondo-cielo);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .escena {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Jarrón - Ahora con z-index alto para que el cristal cubra los tallos */
+        .jarron {
+            position: absolute;
+            bottom: 20px;
+            width: 120px;
+            height: 180px;
+            background: var(--jarron-cristal);
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            z-index: 10;
+            overflow: hidden;
+            backdrop-filter: blur(1px);
+        }
+
+        .agua {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 75%;
+            background: var(--agua);
+            border-top: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contenedor del Ramo - Detrás del jarrón */
+        .ramo-unido {
+            position: absolute;
+            bottom: 20px; /* Base del ramo dentro del jarrón */
+            width: 200px;
+            height: 350px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+        }
+
+        .flor-contenedor {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Tallos largos que bajan hasta el fondo */
+        .flor-contenedor::before {
+            content: '';
+            position: absolute;
+            top: 30px; 
+            bottom: 80px;
+            width: 4px;
+            background: var(--tallo);
+            border-radius: 2px;
+        }
+
+        /* Posiciones ajustadas para que estén JUNTAS */
+        #cont-tulipan {
+            left: 55px;
+            top: 60px;
+            transform: rotate(-8deg);
+        }
+
+        #cont-lirio {
+            left: 85px;
+            top: 20px;
+            z-index: 6;
+        }
+
+        #cont-margarita {
+            left: 115px;
+            top: 70px;
+            transform: rotate(10deg);
+        }
+
+        /* Cabezas de las flores */
+        .tulipan-cabeza {
+            width: 45px;
+            height: 55px;
+            background: var(--tulipan);
+            border-radius: 50% 50% 40% 40%;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .lirio-cabeza {
+            width: 40px;
+            height: 60px;
+            position: relative;
+        }
+        .petalo-lirio {
+            position: absolute;
+            width: 20px;
+            height: 60px;
+            background: var(--lirio);
+            border-radius: 50% 50% 20% 20%;
+            transform-origin: bottom center;
+        }
+        .p1 { transform: rotate(-30deg); left: -5px; }
+        .p2 { transform: rotate(0deg); height: 65px; top: -5px; left: 10px; }
+        .p3 { transform: rotate(30deg); left: 25px; }
+
+        .margarita-cabeza {
+            width: 55px;
+            height: 55px;
+            position: relative;
+        }
+        .centro-m {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 15px; height: 15px;
+            background: var(--centro-margarita);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+        .petalo-m {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 8px; height: 25px;
+            background: var(--margarita);
+            border-radius: 10px;
+            transform-origin: center bottom;
+        }
+
+        .frase {
+            margin-top: 30px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            padding: 15px 25px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            max-width: 80%;
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="escena">
+        <div class="jarron">
+            <div class="agua"></div>
+        </div>
+
+        <div class="ramo-unido">
+            <div id="cont-tulipan" class="flor-contenedor">
+                <div class="tulipan-cabeza"></div>
+            </div>
+
+            <div id="cont-lirio" class="flor-contenedor">
+                <div class="lirio-cabeza">
+                    <div class="petalo-lirio p1"></div>
+                    <div class="petalo-lirio p2"></div>
+                    <div class="petalo-lirio p3"></div>
+                </div>
+            </div>
+
+            <div id="cont-margarita" class="flor-contenedor">
+                <div class="margarita-cabeza">
+                    <div class="centro-m"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(0deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(45deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(90deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(135deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(180deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(225deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(270deg)"></div>
+                    <div class="petalo-m" style="transform: translate(-50%, -100%) rotate(315deg)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="frase">
+        "Sé que no es el ram de flors que te esperaves pero, soc informàtic i este me pareix més del meu estil."
+    </div>
+
+</body>
+</html>
